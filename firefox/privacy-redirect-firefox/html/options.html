@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Privacy Redirect - Options</title>
+  <link rel="stylesheet" href="../css/options.css">
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>Privacy Redirect Options</h1>
+      <p>Configure which websites to redirect and their privacy-focused alternatives</p>
+    </header>
+    
+    <main>
+      <div class="global-settings">
+        <h2>Global Settings</h2>
+        <div class="toggle-container">
+          <label class="switch">
+            <input type="checkbox" id="master-toggle" checked>
+            <span class="slider round"></span>
+          </label>
+          <span>Enable all redirects</span>
+        </div>
+      </div>
+      
+      <div class="site-settings">
+        <h2>Site-Specific Settings</h2>
+        <div id="sites-container">
+          <!-- Sites will be populated by JavaScript -->
+        </div>
+      </div>
+      
+      <div class="actions">
+        <button id="save-btn" class="primary-btn">Save Settings</button>
+        <button id="reset-btn" class="secondary-btn">Reset to Defaults</button>
+      </div>
+    </main>
+    
+    <footer>
+      <p>Privacy Redirect Extension v1.0.0</p>
+    </footer>
+  </div>
+  
+  <script src="../js/options.js"></script>
+</body>
+</html>
