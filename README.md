@@ -2,6 +2,11 @@
 
 **Privacy Please** is a browser extension that automatically redirects users from major websites to privacy-respecting frontend alternatives. Instead of feeding surveillance capitalism, you get clean access to content without tracking, ads, or engagement profiling.
 
+## Enabling/disabling specific sites and changing instances
+
+<video src="options.mp4" poster="options_First_Frame.png" controls width="640" height="480"></video>
+
+---
 ---
 ![Before and after using Privacy Please](docs/demo.gif)
 
