@@ -4,7 +4,9 @@
 
 ## Enabling/disabling specific sites and changing instances
 
-[![Enabling/disabling specific sites and changing instances](options_First_Frame.png)](options.mp4)
+<video src="options.mp4" poster="options_First_Frame.png" controls width="640" height="480"></video>
+
+*Note: Video playback in GitHub READMEs can be inconsistent across different browsers and platforms.*
 
 ---
 ---
