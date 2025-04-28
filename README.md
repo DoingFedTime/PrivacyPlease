@@ -1,6 +1,6 @@
-# Privacy Redirect
+# Privacy Please
 
-**Privacy Redirect** is a browser extension that automatically redirects users from major websites to privacy-respecting frontend alternatives. Instead of feeding surveillance capitalism, you get clean access to content without tracking, ads, or engagement profiling.
+**Privacy Please** is a browser extension that automatically redirects users from major websites to privacy-respecting frontend alternatives. Instead of feeding surveillance capitalism, you get clean access to content without tracking, ads, or engagement profiling.
 
 ---
 ![Before and after using Privacy Please](docs/demo.gif)
