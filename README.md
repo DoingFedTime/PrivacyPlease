@@ -16,7 +16,7 @@ When you navigate to sites like YouTube, Reddit, Twitter/X, or Google, the exten
 Examples:
 - YouTube → Invidious
 - Twitter/X → Nitter
-- Reddit → Libreddit
+- Reddit → RedLib
 - Google Search → SearXNG
 - TikTok → ProxiTok
 
@@ -40,7 +40,7 @@ The extension supports multiple frontends for each service. You can pick your pr
 |----------------|------------------|------------------|
 | YouTube        | Invidious        | `https://yewtu.be` |
 | Twitter/X      | Nitter           | `https://nitter.net` |
-| Reddit         | Libreddit        | `https://libredd.it` |
+| Reddit         | RedLib           | `https://redlib.catsarch.com` |
 | TikTok         | ProxiTok         | `https://proxitok.herokuapp.com` |
 | Instagram      | Proxigram        | `https://proxigram.herokuapp.com` |
 | Google Search  | SearXNG          | `https://searx.space` |
