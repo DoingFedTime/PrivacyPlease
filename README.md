@@ -4,7 +4,7 @@
 
 ## Enabling/disabling specific sites and changing instances
 
-<video src="options.mp4" poster="options_First_Frame.png" controls width="640" height="480"></video>
+<video src="https://github.com/DoingFedTime/PrivacyPlease/blob/74865c45cbed0ce8adc059e56a536637d583018c/options.mp4" poster="options_First_Frame.png" controls width="640" height="480"></video>
 
 ---
 ---
