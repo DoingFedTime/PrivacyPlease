@@ -95,8 +95,8 @@ function initializeDefaultSettings() {
     },
     'reddit.com': {
       enabled: true,
-      preferredInstance: 'https://libredd.it',
-      instances: ['https://libredd.it', 'https://teddit.net', 'https://libreddit.spike.codes']
+      preferredInstance: 'https://redlib.catsarch.com',
+      instances: ['https://libreddit.projectsegfau.lt','https://redlib.catsarch.com','https://redlib.perennialte.ch','https://redlib.tux.pizza','https://libreddit.privacydev.net','https://rl.bloat.cat','https://redlib.r4fo.com','https://reddit.owo.si','https://redlib.ducks.party','https://red.ngn.tf','https://red.artemislena.eu','https://r.darrennathanael.com','https://redlib.kittywi.re','https://redlib.privacyredirect.com','https://redlib.seasi.dev','https://reddit.nerdvpn.de','https://redlib.baczek.me','https://redlib.nadeko.net','https://redlib.private.coffee','https://redlib.4o1x5.dev','https://redlib.privacy.com.de','https://teddit.net','https://teddit.ggc-project.de','https://reddit.lol']
     },
     'instagram.com': {
       enabled: true,
