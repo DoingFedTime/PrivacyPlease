@@ -4,7 +4,7 @@
 
 ## Enabling/disabling specific sites and changing instances
 
-<video src="options.mp4" poster="options_First_Frame.png" controls width="640" height="480"></video>
+<video src="options.mp4" controls width="640" height="480"></video>
 
 *Note: Video playback in GitHub READMEs can be inconsistent across different browsers and platforms.*
 
