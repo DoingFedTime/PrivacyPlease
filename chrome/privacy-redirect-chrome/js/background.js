@@ -30,12 +30,36 @@ async function initialize() {
 function loadSettings() {
   return new Promise((resolve) => {
     chrome.storage.sync.get(['extensionEnabled', 'siteSettings'], (result) => {
+      // Check for errors in chrome.storage.sync.get
+      if (chrome.runtime.lastError) {
+        console.error("Error loading settings:", chrome.runtime.lastError);
+        // Continue with default settings if there's an error
+        initializeDefaultSettings();
+        resolve();
+        return;
+      }
+      
       if (result.extensionEnabled !== undefined) {
         extensionEnabled = result.extensionEnabled;
       }
       
       if (result.siteSettings) {
         siteSettings = result.siteSettings;
+        
+        // Ensure all sites have the instances array
+        let needsUpdate = false;
+        for (const site in siteSettings) {
+          if (!siteSettings[site].instances) {
+            needsUpdate = true;
+            // If instances array is missing, add it with at least the preferred instance
+            siteSettings[site].instances = [siteSettings[site].preferredInstance];
+          }
+        }
+        
+        // If any site was missing instances, save the updated settings
+        if (needsUpdate) {
+          saveSettings();
+        }
       } else {
         // Initialize default site settings if not present
         initializeDefaultSettings();
@@ -49,18 +73,66 @@ function loadSettings() {
 // Initialize default settings for all sites
 function initializeDefaultSettings() {
   siteSettings = {
-    'youtube.com': { enabled: true, preferredInstance: 'https://yewtu.be' },
-    'music.youtube.com': { enabled: true, preferredInstance: 'https://beatbump.ml' },
-    'twitter.com': { enabled: true, preferredInstance: 'https://nitter.net' },
-    'x.com': { enabled: true, preferredInstance: 'https://nitter.net' },
-    'reddit.com': { enabled: true, preferredInstance: 'https://libredd.it' },
-    'instagram.com': { enabled: true, preferredInstance: 'https://proxigram.herokuapp.com' },
-    'tiktok.com': { enabled: true, preferredInstance: 'https://proxitok.herokuapp.com' },
-    'google.com': { enabled: true, preferredInstance: 'https://searx.space' },
-    'medium.com': { enabled: true, preferredInstance: 'https://scribe.rip' },
-    'imgur.com': { enabled: true, preferredInstance: 'https://rimgo.bus-hit.me' },
-    'quora.com': { enabled: true, preferredInstance: 'https://quetre.iket.me' },
-    'imdb.com': { enabled: true, preferredInstance: 'https://libremdb.iket.me' }
+    'youtube.com': {
+      enabled: true,
+      preferredInstance: 'https://yewtu.be',
+      instances: ['https://yewtu.be', 'https://vid.puffyan.us', 'https://invidious.projectsegfau.lt']
+    },
+    'music.youtube.com': {
+      enabled: true,
+      preferredInstance: 'https://beatbump.ml',
+      instances: ['https://beatbump.ml', 'https://music.youtube.com']
+    },
+    'twitter.com': {
+      enabled: true,
+      preferredInstance: 'https://nitter.net',
+      instances: ['https://nitter.net', 'https://nitter.lacontrevoie.fr', 'https://nitter.1d4.us']
+    },
+    'x.com': {
+      enabled: true,
+      preferredInstance: 'https://nitter.net',
+      instances: ['https://nitter.net', 'https://nitter.lacontrevoie.fr', 'https://nitter.1d4.us']
+    },
+    'reddit.com': {
+      enabled: true,
+      preferredInstance: 'https://libredd.it',
+      instances: ['https://libredd.it', 'https://teddit.net', 'https://libreddit.spike.codes']
+    },
+    'instagram.com': {
+      enabled: true,
+      preferredInstance: 'https://proxigram.herokuapp.com',
+      instances: ['https://proxigram.herokuapp.com', 'https://bibliogram.art']
+    },
+    'tiktok.com': {
+      enabled: true,
+      preferredInstance: 'https://proxitok.herokuapp.com',
+      instances: ['https://proxitok.herokuapp.com', 'https://proxitok.pabloferreiro.es']
+    },
+    'google.com': {
+      enabled: true,
+      preferredInstance: 'https://searx.space',
+      instances: ['https://searx.space', 'https://search.brave.com', 'https://duckduckgo.com']
+    },
+    'medium.com': {
+      enabled: true,
+      preferredInstance: 'https://scribe.rip',
+      instances: ['https://scribe.rip', 'https://libmedium.batsense.net']
+    },
+    'imgur.com': {
+      enabled: true,
+      preferredInstance: 'https://rimgo.bus-hit.me',
+      instances: ['https://rimgo.bus-hit.me', 'https://rimgo.totaldarkness.net']
+    },
+    'quora.com': {
+      enabled: true,
+      preferredInstance: 'https://quetre.iket.me',
+      instances: ['https://quetre.iket.me', 'https://quetre.tokhmi.xyz']
+    },
+    'imdb.com': {
+      enabled: true,
+      preferredInstance: 'https://libremdb.iket.me',
+      instances: ['https://libremdb.iket.me', 'https://libremdb.pussthecat.org']
+    }
   };
   
   // Save default settings
@@ -69,9 +141,14 @@ function initializeDefaultSettings() {
 
 // Save settings to storage
 function saveSettings() {
-  chrome.storage.sync.set({ 
+  chrome.storage.sync.set({
     extensionEnabled: extensionEnabled,
     siteSettings: siteSettings
+  }, () => {
+    // Check for errors when saving settings
+    if (chrome.runtime.lastError) {
+      console.error("Error saving settings:", chrome.runtime.lastError);
+    }
   });
 }
 
@@ -101,21 +178,32 @@ function updateRuleStates() {
 // Listen for messages from popup or options page
 chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
   if (message.action === 'getSettings') {
-    sendResponse({ 
+    sendResponse({
       extensionEnabled: extensionEnabled,
-      siteSettings: siteSettings
+      settings: siteSettings  // Changed from siteSettings to settings to match what options.js expects
     });
   } else if (message.action === 'updateGlobalState') {
     extensionEnabled = message.enabled;
     saveSettings();
     updateRuleStates();
     sendResponse({ success: true });
-  } else if (message.action === 'updateSiteSettings') {
+  } else if (message.action === 'updateSettings' || message.action === 'updateSiteSettings') {
+    // Handle both updateSettings (from options.js) and updateSiteSettings (if used elsewhere)
     const { site, enabled, preferredInstance } = message.data;
     if (siteSettings[site]) {
       siteSettings[site].enabled = enabled;
       if (preferredInstance) {
-        siteSettings[site].preferredInstance = preferredInstance;
+        // Validate that preferredInstance is in the instances array
+        if (siteSettings[site].instances && siteSettings[site].instances.includes(preferredInstance)) {
+          siteSettings[site].preferredInstance = preferredInstance;
+        } else {
+          console.warn(`Invalid preferredInstance for ${site}: ${preferredInstance}. Setting to default.`);
+          // Set to the first instance in the array if available
+          if (siteSettings[site].instances && siteSettings[site].instances.length > 0) {
+            siteSettings[site].preferredInstance = siteSettings[site].instances[0];
+          }
+          // If no instances array or empty, keep the current preferredInstance
+        }
       }
       saveSettings();
       updateRuleStates();

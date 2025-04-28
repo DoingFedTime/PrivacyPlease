@@ -1,6 +1,6 @@
 {
   "manifest_version": 3,
-  "name": "Privacy Redirect",
+  "name": "Privacy Please",
   "version": "1.0.0",
   "description": "Automatically redirects from regular websites to privacy-focused frontend alternatives",
   "permissions": [
