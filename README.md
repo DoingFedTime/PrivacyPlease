@@ -4,9 +4,7 @@
 
 ## Enabling/disabling specific sites and changing instances
 
-<video src="options.mp4" controls width="640" height="480"></video>
-
-*Note: Video playback in GitHub READMEs can be inconsistent across different browsers and platforms.*
+<iframe width="560" height="315" src="https://www.youtube-nocookie.com/embed/fk00ZuawomI?si=j_NxS5V3EtYPVfZg" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
 
 ---
 ---
