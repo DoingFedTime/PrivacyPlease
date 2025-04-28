@@ -4,7 +4,7 @@
 
 ## Enabling/disabling specific sites and changing instances
 
-<video src="options.mp4" poster="options_First_Frame.png" controls width="640" height="480"></video>
+[![Enabling/disabling specific sites and changing instances](options_First_Frame.png)](options.mp4)
 
 ---
 ---
