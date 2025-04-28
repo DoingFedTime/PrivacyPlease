@@ -22,7 +22,7 @@
     "*://*.quora.com/*"
   ],
   "background": {
-    "service_worker": "js/background.js"
+    "scripts": ["js/background.js"]
   },
   "action": {
     "default_popup": "html/popup.html",
