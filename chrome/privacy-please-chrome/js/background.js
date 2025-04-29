@@ -86,12 +86,12 @@ function initializeDefaultSettings() {
     'twitter.com': {
       enabled: true,
       preferredInstance: 'https://nitter.net',
-      instances: ['https://xcancel.com', 'https://nitter.space', 'https://nitter.privacyredirect.com', 'https://lightbrd.com', 'https://https://nitter.net', 'https://nitter.poast.org', 'https://nitter.tiekoetter.com']
+      instances: ['https://nitter.net', 'https://xcancel.com', 'https://nitter.space', 'https://nitter.privacyredirect.com', 'https://lightbrd.com', 'https://nitter.poast.org', 'https://nitter.tiekoetter.com']
     },
     'x.com': {
       enabled: true,
       preferredInstance: 'https://nitter.net',
-      instances: ['https://xcancel.com', 'https://nitter.space', 'https://nitter.privacyredirect.com', 'https://lightbrd.com', 'https://https://nitter.net', 'https://nitter.poast.org', 'https://nitter.tiekoetter.com']
+      instances: ['https://nitter.net', 'https://xcancel.com', 'https://nitter.space', 'https://nitter.privacyredirect.com', 'https://lightbrd.com', 'https://nitter.poast.org', 'https://nitter.tiekoetter.com']
     },
     'reddit.com': {
       enabled: true,

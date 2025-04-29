@@ -77,11 +77,11 @@ const redirectMappings = {
     enabled: true,
     redirectTo: 'https://nitter.net',
     instances: [
+      'https://nitter.net',
       'https://xcancel.com',
       'https://nitter.space',
       'https://nitter.privacyredirect.com',
       'https://lightbrd.com',
-      'https://https://nitter.net',
       'https://nitter.poast.org',
       'https://nitter.tiekoetter.com'
     ],
@@ -102,11 +102,11 @@ const redirectMappings = {
     enabled: true,
     redirectTo: 'https://nitter.net',
     instances: [
+      'https://nitter.net',
       'https://xcancel.com',
       'https://nitter.space',
       'https://nitter.privacyredirect.com',
       'https://lightbrd.com',
-      'https://https://nitter.net',
       'https://nitter.poast.org',
       'https://nitter.tiekoetter.com'
     ],
