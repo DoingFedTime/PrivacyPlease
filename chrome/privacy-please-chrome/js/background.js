@@ -73,65 +73,70 @@ function loadSettings() {
 // Initialize default settings for all sites
 function initializeDefaultSettings() {
   siteSettings = {
+    'music.youtube.com': {
+      enabled: true,
+      preferredInstance: 'https://beatbump.io',
+      instances: ['https://beatbump.io', 'https://music.youtube.com']
+    },
     'youtube.com': {
       enabled: true,
       preferredInstance: 'https://yewtu.be',
-      instances: ['https://yewtu.be', 'https://vid.puffyan.us', 'https://invidious.projectsegfau.lt']
-    },
-    'music.youtube.com': {
-      enabled: true,
-      preferredInstance: 'https://beatbump.ml',
-      instances: ['https://beatbump.ml', 'https://music.youtube.com']
+      instances: ['https://yewtu.be', 'https://inv.nadeko.net', 'https://invidious.nerdvpn.de', 'https://id.420129.xyz']
     },
     'twitter.com': {
       enabled: true,
       preferredInstance: 'https://nitter.net',
-      instances: ['https://nitter.net', 'https://nitter.lacontrevoie.fr', 'https://nitter.1d4.us']
+      instances: ['https://nitter.net', 'https://xcancel.com', 'https://nitter.space', 'https://nitter.privacyredirect.com', 'https://lightbrd.com', 'https://nitter.poast.org', 'https://nitter.tiekoetter.com']
     },
     'x.com': {
       enabled: true,
       preferredInstance: 'https://nitter.net',
-      instances: ['https://nitter.net', 'https://nitter.lacontrevoie.fr', 'https://nitter.1d4.us']
+      instances: ['https://nitter.net', 'https://xcancel.com', 'https://nitter.space', 'https://nitter.privacyredirect.com', 'https://lightbrd.com', 'https://nitter.poast.org', 'https://nitter.tiekoetter.com']
     },
     'reddit.com': {
       enabled: true,
       preferredInstance: 'https://redlib.catsarch.com',
-      instances: ['https://libreddit.projectsegfau.lt','https://redlib.catsarch.com','https://redlib.perennialte.ch','https://redlib.tux.pizza','https://libreddit.privacydev.net','https://rl.bloat.cat','https://redlib.r4fo.com','https://reddit.owo.si','https://redlib.ducks.party','https://red.ngn.tf','https://red.artemislena.eu','https://r.darrennathanael.com','https://redlib.kittywi.re','https://redlib.privacyredirect.com','https://redlib.seasi.dev','https://reddit.nerdvpn.de','https://redlib.baczek.me','https://redlib.nadeko.net','https://redlib.private.coffee','https://redlib.4o1x5.dev','https://redlib.privacy.com.de','https://teddit.net','https://teddit.ggc-project.de','https://reddit.lol']
+      instances: ['https://redlib.catsarch.com', 'https://redlib.perennialte.ch', 'https://redlib.tux.pizza', 'https://libreddit.privacydev.net', 'https://rl.bloat.cat', 'https://redlib.r4fo.com', 'https://reddit.owo.si', 'https://redlib.ducks.party', 'https://red.ngn.tf', 'https://red.artemislena.eu', 'https://r.darrennathanael.com', 'https://redlib.kittywi.re', 'https://redlib.privacyredirect.com', 'https://reddit.nerdvpn.de', 'https://redlib.baczek.me', 'https://redlib.nadeko.net', 'https://redlib.private.coffee', 'https://redlib.4o1x5.dev', 'https://redlib.privacy.com.de']
     },
     'instagram.com': {
       enabled: true,
-      preferredInstance: 'https://proxigram.herokuapp.com',
-      instances: ['https://proxigram.herokuapp.com', 'https://bibliogram.art']
+      preferredInstance: 'https://proxigram.lunar.icu',
+      instances: ['https://proxigram.lunar.icu', 'https://imginn.com']
     },
     'tiktok.com': {
       enabled: true,
-      preferredInstance: 'https://proxitok.herokuapp.com',
-      instances: ['https://proxitok.herokuapp.com', 'https://proxitok.pabloferreiro.es']
+      preferredInstance: 'https://tok.artemislena.eu',
+      instances: ['https://tok.artemislena.eu', 'https://proxitok.pussthecat.org', 'https://tok.adminforge.de', 'https://cringe.whatever.social', 'https://proxitok.lunar.icu', 'https://proxitok.belloworld.it']
+    },
+    'translate.google.com': {
+      enabled: true,
+      preferredInstance: 'https://lingva.ml',
+      instances: ['https://lingva.ml', 'https://lingva.garudalinux.org', 'https://translate.plausibility.cloud', 'https://lingva.lunar.icu', 'https://translate.projectsegfau.lt']
     },
     'google.com': {
       enabled: true,
-      preferredInstance: 'https://searx.space',
-      instances: ['https://searx.space', 'https://search.brave.com', 'https://duckduckgo.com']
+      preferredInstance: 'https://search.disroot.org',
+      instances: ['https://search.disroot.org', 'https://searx.be', 'https://priv.au', 'https://search.rhscz.eu', 'https://searx.tuxcloud.net', 'https://search.funami.tech', 'https://librey.sny.sh', 'https://search.liv.town']
     },
     'medium.com': {
       enabled: true,
       preferredInstance: 'https://scribe.rip',
-      instances: ['https://scribe.rip', 'https://libmedium.batsense.net']
+      instances: ['https://scribe.rip', 'https://scribe.nixnet.services', 'https://scribe.rawbit.ninja', 'https://m.opnxng.com', 'https://scribe.privacyredirect.com']
     },
     'imgur.com': {
       enabled: true,
-      preferredInstance: 'https://rimgo.bus-hit.me',
-      instances: ['https://rimgo.bus-hit.me', 'https://rimgo.totaldarkness.net']
+      preferredInstance: 'https://r.opnxng.com',
+      instances: ['https://r.opnxng.com', 'https://imgur.artemislena.eu', 'https://rimgo.totaldarkness.net', 'https://rimgo.bloat.cat', 'https://rimgo.pussthecat.org']
     },
     'quora.com': {
       enabled: true,
       preferredInstance: 'https://quetre.iket.me',
-      instances: ['https://quetre.iket.me', 'https://quetre.tokhmi.xyz']
+      instances: ['https://quetre.iket.me', 'https://quetre.blackdrgn.nl', 'https://q.opnxng.com', 'https://quetre.canine.tools', 'https://qt.bloat.cat', 'https://quetre.pussthecat.org']
     },
     'imdb.com': {
       enabled: true,
       preferredInstance: 'https://libremdb.iket.me',
-      instances: ['https://libremdb.iket.me', 'https://libremdb.pussthecat.org']
+      instances: ['https://libremdb.iket.me', 'https://d.opnxng.com', 'https://lmdb.bloat.cat', 'https://libremdb.catsarch.com', 'https://imdb.nerdvpn.de', 'https://libremdb.canine.tools']
     }
   };
   

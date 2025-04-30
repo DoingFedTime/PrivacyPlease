@@ -1,22 +1,43 @@
-// Updated Background Script for Privacy Please extension
-// Integrates the enhanced redirection logic from redirections.js
+// Background script: redirects supported sites to privacy-friendly frontends.
 
-// Import the enhanced redirection mappings
-// Note: In Manifest V3, we need to use import statements differently
-// We'll include the redirections.js content directly here for compatibility
+// existing list of redirect lists, will make expanding this a lot easier
+// https://github.com/libredirect/instances
 
 // Map of original websites to their privacy-focused alternatives
 const redirectMappings = {
+  // YouTube Music to Beatbump or Invidious
+  // Beatbump instances: https://github.com/snuffyDev/Beatbump
+  // couldn't find any working Invidious Music instances
+  // and only one working beatbump instance
+  // this needs to be before YouTube otherwise it'll use the YouTube redirect
+  'music.youtube.com': {
+    enabled: true,
+    redirectTo: 'https://beatbump.io',
+    instances: [
+      'https://beatbump.io'
+    ],
+    preferredInstance: 'https://beatbump.io'
+  },
+  
   // YouTube to Invidious
+  // Invidious instances API: https://api.invidious.io/
+  // JSON: https://api.invidious.io/instances.json?pretty=1&sort_by=type,users
   'youtube.com': {
     enabled: true,
-    redirectTo: 'https://invidious.io',
+    redirectTo: 'https://yewtu.be',
     instances: [
       'https://yewtu.be',
-      'https://invidious.snopyta.org',
-      'https://invidio.us',
-      'https://inv.riverside.rocks',
-      'https://invidious.kavin.rocks'
+      'https://inv.nadeko.net',
+      'https://invidious.nerdvpn.de',
+      'https://id.420129.xyz'
+      
+      // redirects to https://redirect.invidious.io/ which lists instances
+      //'https://invidious.snopyta.org',
+      //'https://invidious.io',
+      //'https://invidio.us'
+      
+      // invalid SSL cert
+      //'https://invidious.kavin.rocks'
     ],
     preferredInstance: 'https://yewtu.be',
     pathHandlers: {
@@ -49,28 +70,20 @@ const redirectMappings = {
     }
   },
   
-  // YouTube Music to Beatbump or Invidious
-  'music.youtube.com': {
-    enabled: true,
-    redirectTo: 'https://beatbump.ml',
-    instances: [
-      'https://beatbump.ml',
-      'https://music.invidious.io',
-      'https://music.yewtu.be'
-    ],
-    preferredInstance: 'https://beatbump.ml'
-  },
-  
   // Twitter/X to Nitter
+  // Nitter instances list: https://github.com/zedeus/nitter/wiki/Instances
+  // instance health status and uptime: https://status.d420.de/
   'twitter.com': {
     enabled: true,
     redirectTo: 'https://nitter.net',
     instances: [
       'https://nitter.net',
-      'https://nitter.42l.fr',
-      'https://nitter.pussthecat.org',
-      'https://nitter.fdn.fr',
-      'https://nitter.1d4.us'
+      'https://xcancel.com',
+      'https://nitter.space',
+      'https://nitter.privacyredirect.com',
+      'https://lightbrd.com',
+      'https://nitter.poast.org',
+      'https://nitter.tiekoetter.com'
     ],
     preferredInstance: 'https://nitter.net',
     pathHandlers: {
@@ -90,10 +103,12 @@ const redirectMappings = {
     redirectTo: 'https://nitter.net',
     instances: [
       'https://nitter.net',
-      'https://nitter.42l.fr',
-      'https://nitter.pussthecat.org',
-      'https://nitter.fdn.fr',
-      'https://nitter.1d4.us'
+      'https://xcancel.com',
+      'https://nitter.space',
+      'https://nitter.privacyredirect.com',
+      'https://lightbrd.com',
+      'https://nitter.poast.org',
+      'https://nitter.tiekoetter.com'
     ],
     preferredInstance: 'https://nitter.net',
     pathHandlers: {
@@ -107,12 +122,12 @@ const redirectMappings = {
     }
   },
   
-  // Reddit to Libreddit/Teddit/Redlib
-'reddit.com': {
+  // Reddit to RedLib/Teddit
+  // RedLib instances: https://github.com/redlib-org/redlib-instances/blob/main/instances.json
+  'reddit.com': {
     enabled: true,
     redirectTo: 'https://redlib.catsarch.com',
     instances: [
-      'https://libreddit.projectsegfau.lt',
       'https://redlib.catsarch.com',
       'https://redlib.perennialte.ch',
       'https://redlib.tux.pizza',
@@ -126,16 +141,15 @@ const redirectMappings = {
       'https://r.darrennathanael.com',
       'https://redlib.kittywi.re',
       'https://redlib.privacyredirect.com',
-      'https://redlib.seasi.dev',
       'https://reddit.nerdvpn.de',
       'https://redlib.baczek.me',
       'https://redlib.nadeko.net',
       'https://redlib.private.coffee',
       'https://redlib.4o1x5.dev',
-      'https://redlib.privacy.com.de',
-      'https://teddit.net',
-      'https://teddit.ggc-project.de',
-      'https://reddit.lol'
+      'https://redlib.privacy.com.de'
+      // aren't currently working, not loading properly and the instance is out of date
+      //'https://libreddit.projectsegfau.lt',
+      //'https://redlib.seasi.dev',
     ],
     preferredInstance: 'https://redlib.catsarch.com',
     pathHandlers: {
@@ -149,14 +163,16 @@ const redirectMappings = {
   },
   
   // Instagram to Proxigram/Imginn
+  // Proxigram instances: https://codeberg.org/proxigram/proxigram/wiki/Instances
+  // I think there's only one 'instance' of Imginn and it's not an open source site/project as far as I can tell
   'instagram.com': {
     enabled: true,
-    redirectTo: 'https://proxigram.herokuapp.com',
+    redirectTo: 'https://proxigram.lunar.icu',
     instances: [
-      'https://proxigram.herokuapp.com',
+      'https://proxigram.lunar.icu',
       'https://imginn.com'
     ],
-    preferredInstance: 'https://proxigram.herokuapp.com',
+    preferredInstance: 'https://proxigram.lunar.icu',
     pathHandlers: {
       '/p/': (url) => {
         const postId = url.pathname.split('/p/')[1].split('/')[0];
@@ -166,15 +182,25 @@ const redirectMappings = {
   },
   
   // TikTok to ProxiTok
+  // ProxiTok instances: https://github.com/pablouser1/ProxiTok/wiki/Public-instances
   'tiktok.com': {
     enabled: true,
-    redirectTo: 'https://proxitok.herokuapp.com',
+    redirectTo: 'https://tok.artemislena.eu',
     instances: [
-      'https://proxitok.herokuapp.com',
+      'https://tok.artemislena.eu',
       'https://proxitok.pussthecat.org',
-      'https://proxitok.privacydev.net'
+      'https://tok.adminforge.de',
+      'https://cringe.whatever.social',
+      'https://proxitok.lunar.icu',
+      'https://proxitok.belloworld.it'
+      // 502 Bad Gateway
+      //'https://proxitok.pabloferreiro.es',
+      //'https://tok.habedieeh.re',
+      //'https://proxitok.privacy.com.de',
+      //'https://tiktok.wpme.pl'
+      
     ],
-    preferredInstance: 'https://proxitok.herokuapp.com',
+    preferredInstance: 'https://tok.artemislena.eu',
     pathHandlers: {
       '/@': (url) => {
         const username = url.pathname.split('/')[1];
@@ -187,34 +213,18 @@ const redirectMappings = {
     }
   },
   
-  // Google Search to SearXNG/LibreY
-  'google.com': {
-    enabled: true,
-    redirectTo: 'https://searx.space',
-    instances: [
-      'https://searx.space',
-      'https://search.disroot.org',
-      'https://search.privacytools.io'
-    ],
-    preferredInstance: 'https://searx.space',
-    pathHandlers: {
-      '/search': (url) => {
-        const query = url.searchParams.get('q');
-        if (query) {
-          return `/search?q=${encodeURIComponent(query)}`;
-        }
-        return '/';
-      }
-    }
-  },
-  
   // Google Translate to Lingva Translate
+  // needs to be before Google so it doesn't get caught by it's redirect
+  // Lingva instances: https://github.com/thedaviddelta/lingva-translate
   'translate.google.com': {
     enabled: true,
     redirectTo: 'https://lingva.ml',
     instances: [
       'https://lingva.ml',
-      'https://lingva.pussthecat.org'
+      'https://lingva.garudalinux.org',
+      'https://translate.plausibility.cloud',
+      'https://lingva.lunar.icu',
+      'https://translate.projectsegfau.lt'
     ],
     preferredInstance: 'https://lingva.ml',
     pathHandlers: {
@@ -230,13 +240,50 @@ const redirectMappings = {
     }
   },
   
+  // Google Search to SearXNG/LibreY
+  // SearXNG instances: https://searx.space - I've only added a few as there were 76 up when adding
+  // LibreY instances: https://search.liv.town/instances.php
+  //                   https://github.com/Ahwxorg/LibreY/blob/main/instances.json
+  'google.com': {
+    enabled: true,
+    redirectTo: 'https://search.disroot.org',
+    instances: [
+      // SearXNG
+      'https://search.disroot.org',
+      'https://searx.be',
+      'https://priv.au',
+      'https://search.rhscz.eu',
+      'https://searx.tuxcloud.net',
+      // LibreY
+      'https://search.funami.tech',
+      'https://librey.sny.sh',
+      'https://search.liv.town'
+    ],
+    preferredInstance: 'https://search.disroot.org',
+    pathHandlers: {
+      '/search': (url) => {
+        const query = url.searchParams.get('q');
+        if (query) {
+          return `/search?q=${encodeURIComponent(query)}`;
+        }
+        return '/';
+      }
+    }
+  },
+  
   // Medium to Scribe
+  // Scribe instances: https://git.sr.ht/~edwardloveall/scribe/tree/HEAD/docs/instances.md
   'medium.com': {
     enabled: true,
     redirectTo: 'https://scribe.rip',
     instances: [
       'https://scribe.rip',
-      'https://scribe.nixnet.services'
+      'https://scribe.nixnet.services',
+      'https://scribe.rawbit.ninja',
+      'https://m.opnxng.com',
+      'https://scribe.privacyredirect.com'
+      // down for maintenance at the time of adding
+      //'https://scribe.r4fo.com'
     ],
     preferredInstance: 'https://scribe.rip',
     pathHandlers: {
@@ -247,15 +294,21 @@ const redirectMappings = {
   },
   
   // Imgur to Rimgo
+  // Rimgo instances: 
+  // https://codeberg.org/rimgo/instances
+  // https://rimgo.codeberg.page
+  // https://rimgo.codeberg.page/api.json
   'imgur.com': {
     enabled: true,
-    redirectTo: 'https://rimgo.bus-hit.me',
+    redirectTo: 'https://r.opnxng.com',
     instances: [
-      'https://rimgo.bus-hit.me',
-      'https://rimgo.pussthecat.org',
-      'https://rimgo.totaldarkness.net'
+      'https://r.opnxng.com',
+      'https://imgur.artemislena.eu',
+      'https://rimgo.totaldarkness.net',
+      'https://rimgo.bloat.cat',
+      'https://rimgo.pussthecat.org'
     ],
-    preferredInstance: 'https://rimgo.bus-hit.me',
+    preferredInstance: 'https://r.opnxng.com',
     pathHandlers: {
       '/a/': (url) => {
         const albumId = url.pathname.split('/a/')[1].split('/')[0];
@@ -269,11 +322,16 @@ const redirectMappings = {
   },
   
   // Quora to Quetre
+  // Quetre instances: https://github.com/zyachel/quetre/blob/main/instances.json
   'quora.com': {
     enabled: true,
     redirectTo: 'https://quetre.iket.me',
     instances: [
       'https://quetre.iket.me',
+      'https://quetre.blackdrgn.nl',
+      'https://q.opnxng.com',
+      'https://quetre.canine.tools',
+      'https://qt.bloat.cat',
       'https://quetre.pussthecat.org'
     ],
     preferredInstance: 'https://quetre.iket.me'
@@ -290,11 +348,17 @@ const redirectMappings = {
   },
   
   // IMDb to LibreMDb
+  // LibreMDb instances: https://github.com/zyachel/libremdb
   'imdb.com': {
     enabled: true,
     redirectTo: 'https://libremdb.iket.me',
     instances: [
-      'https://libremdb.iket.me'
+      'https://libremdb.iket.me',
+      'https://d.opnxng.com',
+      'https://lmdb.bloat.cat',
+      'https://libremdb.catsarch.com',
+      'https://imdb.nerdvpn.de',
+      'https://libremdb.canine.tools'
     ],
     preferredInstance: 'https://libremdb.iket.me',
     pathHandlers: {
