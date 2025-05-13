@@ -100,7 +100,22 @@ document.addEventListener('DOMContentLoaded', function() {
       }
       select.appendChild(option);
     });
+
+    const customOption = document.createElement('option');
+
+    customOption.textContent = "Custom";
+
+    select.appendChild(customOption);
+
+
+    //const customOptionField = document.createElement('input');
     
+    //customOptionField.type = "url";
+    
+   // customOption.appendChild(customOptionField);
+
+    //select.appendChild(customOption)
+
     instanceSelector.appendChild(instanceLabel);
     instanceSelector.appendChild(select);
     
