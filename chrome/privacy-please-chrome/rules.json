@@ -117,7 +117,7 @@
     "action": {
       "type": "redirect",
       "redirect": {
-        "regexSubstitution": "https://searx.be/search?q=\\1"
+        "regexSubstitution": "https://search.disroot.org/search?q=\\1"
       }
     },
     "condition": {
