@@ -10,7 +10,9 @@
     },
     "condition": {
       "regexFilter": "^https?://(?:www\\.)?youtube\\.com(/.*)",
-      "resourceTypes": ["main_frame"]
+      "resourceTypes": [
+        "main_frame"
+      ]
     }
   },
   {
@@ -24,7 +26,9 @@
     },
     "condition": {
       "regexFilter": "^https?://(?:www\\.)?music\\.youtube\\.com(/.*)",
-      "resourceTypes": ["main_frame"]
+      "resourceTypes": [
+        "main_frame"
+      ]
     }
   },
   {
@@ -38,7 +42,9 @@
     },
     "condition": {
       "regexFilter": "^https?://(?:www\\.)?twitter\\.com(/.*)",
-      "resourceTypes": ["main_frame"]
+      "resourceTypes": [
+        "main_frame"
+      ]
     }
   },
   {
@@ -52,7 +58,9 @@
     },
     "condition": {
       "regexFilter": "^https?://(?:www\\.)?x\\.com(/.*)",
-      "resourceTypes": ["main_frame"]
+      "resourceTypes": [
+        "main_frame"
+      ]
     }
   },
   {
@@ -66,7 +74,9 @@
     },
     "condition": {
       "regexFilter": "^https?://(?:www\\.)?reddit\\.com(/.*)",
-      "resourceTypes": ["main_frame"]
+      "resourceTypes": [
+        "main_frame"
+      ]
     }
   },
   {
@@ -80,7 +90,9 @@
     },
     "condition": {
       "regexFilter": "^https?://(?:www\\.)?instagram\\.com(/.*)",
-      "resourceTypes": ["main_frame"]
+      "resourceTypes": [
+        "main_frame"
+      ]
     }
   },
   {
@@ -94,7 +106,9 @@
     },
     "condition": {
       "regexFilter": "^https?://(?:www\\.)?tiktok\\.com(/.*)",
-      "resourceTypes": ["main_frame"]
+      "resourceTypes": [
+        "main_frame"
+      ]
     }
   },
   {
@@ -103,12 +117,14 @@
     "action": {
       "type": "redirect",
       "redirect": {
-        "regexSubstitution": "https://searx.space/search?q=\\1"
+        "regexSubstitution": "https://searx.be/search?q=\\1"
       }
     },
     "condition": {
       "regexFilter": "^https?://(?:www\\.)?google\\.com/search\\?q=([^&]*)",
-      "resourceTypes": ["main_frame"]
+      "resourceTypes": [
+        "main_frame"
+      ]
     }
   },
   {
@@ -122,7 +138,9 @@
     },
     "condition": {
       "regexFilter": "^https?://(?:www\\.)?medium\\.com(/.*)",
-      "resourceTypes": ["main_frame"]
+      "resourceTypes": [
+        "main_frame"
+      ]
     }
   },
   {
@@ -136,7 +154,9 @@
     },
     "condition": {
       "regexFilter": "^https?://(?:www\\.)?imgur\\.com(/.*)",
-      "resourceTypes": ["main_frame"]
+      "resourceTypes": [
+        "main_frame"
+      ]
     }
   },
   {
@@ -150,7 +170,9 @@
     },
     "condition": {
       "regexFilter": "^https?://(?:www\\.)?quora\\.com(/.*)",
-      "resourceTypes": ["main_frame"]
+      "resourceTypes": [
+        "main_frame"
+      ]
     }
   },
   {
@@ -164,7 +186,9 @@
     },
     "condition": {
       "regexFilter": "^https?://(?:www\\.)?imdb\\.com(/.*)",
-      "resourceTypes": ["main_frame"]
+      "resourceTypes": [
+        "main_frame"
+      ]
     }
   }
 ]
