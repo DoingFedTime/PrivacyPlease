@@ -26,6 +26,7 @@ const redirectMappings = {
     instances: [
       'https://beatbump.io'
     ],
+    customPreferredInstance: false,
     preferredInstance: 'https://beatbump.io'
   },
   
@@ -49,6 +50,7 @@ const redirectMappings = {
       // invalid SSL cert
       //'https://invidious.kavin.rocks'
     ],
+    customPreferredInstance: false,
     preferredInstance: 'https://yewtu.be',
     pathHandlers: {
       '/watch': (url) => {
@@ -95,6 +97,7 @@ const redirectMappings = {
       'https://nitter.poast.org',
       'https://nitter.tiekoetter.com'
     ],
+    customPreferredInstance: false,
     preferredInstance: 'https://nitter.net',
     pathHandlers: {
       '/search': (url) => {
@@ -120,6 +123,7 @@ const redirectMappings = {
       'https://nitter.poast.org',
       'https://nitter.tiekoetter.com'
     ],
+    customPreferredInstance: false,
     preferredInstance: 'https://nitter.net',
     pathHandlers: {
       '/search': (url) => {
@@ -161,6 +165,7 @@ const redirectMappings = {
       //'https://libreddit.projectsegfau.lt',
       //'https://redlib.seasi.dev',
     ],
+    customPreferredInstance: false,
     preferredInstance: 'https://redlib.catsarch.com',
     pathHandlers: {
       '/r/': (url) => {
@@ -182,6 +187,7 @@ const redirectMappings = {
       'https://proxigram.lunar.icu',
       'https://imginn.com'
     ],
+    customPreferredInstance: false,
     preferredInstance: 'https://proxigram.lunar.icu',
     pathHandlers: {
       '/p/': (url) => {
@@ -210,6 +216,7 @@ const redirectMappings = {
       //'https://tiktok.wpme.pl'
       
     ],
+    customPreferredInstance: false,
     preferredInstance: 'https://tok.artemislena.eu',
     pathHandlers: {
       '/@': (url) => {
@@ -236,6 +243,7 @@ const redirectMappings = {
       'https://lingva.lunar.icu',
       'https://translate.projectsegfau.lt'
     ],
+    customPreferredInstance: false,
     preferredInstance: 'https://lingva.ml',
     pathHandlers: {
       '/': (url) => {
@@ -269,6 +277,7 @@ const redirectMappings = {
       'https://librey.sny.sh',
       'https://search.liv.town'
     ],
+    customPreferredInstance: false,
     preferredInstance: 'https://search.disroot.org',
     pathHandlers: {
       '/search': (url) => {
@@ -295,6 +304,7 @@ const redirectMappings = {
       // down for maintenance at the time of adding
       //'https://scribe.r4fo.com'
     ],
+    customPreferredInstance: false,
     preferredInstance: 'https://scribe.rip',
     pathHandlers: {
       '/': (url) => {
@@ -318,6 +328,7 @@ const redirectMappings = {
       'https://rimgo.bloat.cat',
       'https://rimgo.pussthecat.org'
     ],
+    customPreferredInstance: false,
     preferredInstance: 'https://r.opnxng.com',
     pathHandlers: {
       '/a/': (url) => {
@@ -344,6 +355,7 @@ const redirectMappings = {
       'https://qt.bloat.cat',
       'https://quetre.pussthecat.org'
     ],
+    customPreferredInstance: false,
     preferredInstance: 'https://quetre.iket.me'
   },
   
@@ -354,6 +366,7 @@ const redirectMappings = {
     instances: [
       'https://m.facebook.com'
     ],
+    customPreferredInstance: false,
     preferredInstance: 'https://m.facebook.com'
   },
   
@@ -371,6 +384,7 @@ const redirectMappings = {
       'https://imdb.nerdvpn.de',
       'https://libremdb.canine.tools'
     ],
+    customPreferredInstance: false,
     preferredInstance: 'https://libremdb.iket.me',
     pathHandlers: {
       '/title/': (url) => {
@@ -396,6 +410,7 @@ function loadSettings() {
             redirectMappings[site].enabled = settings.enabled;
             if (settings.preferredInstance) {
               redirectMappings[site].preferredInstance = settings.preferredInstance;
+              redirectMappings[site].customPreferredInstance = settings.customPreferredInstance;
             }
           }
         }
@@ -406,11 +421,12 @@ function loadSettings() {
 }
 
 // Save settings to storage
-function saveSettings() {
+function saveSettings(){
   const settingsToSave = {};
   for (const [site, settings] of Object.entries(redirectMappings)) {
     settingsToSave[site] = {
       enabled: settings.enabled,
+      customPreferredInstance: settings.customPreferredInstance,
       preferredInstance: settings.preferredInstance
     };
   }
@@ -484,11 +500,13 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
   if (message.action === 'getSettings') {
     sendResponse({ settings: redirectMappings });
   } else if (message.action === 'updateSettings') {
-    const { site, enabled, preferredInstance } = message.data;
+    const { site, enabled, preferredInstance, customPreferredInstance } = message.data;
+    console.log(message.data)
     if (redirectMappings[site]) {
       redirectMappings[site].enabled = enabled;
       if (preferredInstance) {
         redirectMappings[site].preferredInstance = preferredInstance;
+        redirectMappings[site].customPreferredInstance = customPreferredInstance;
       }
       saveSettings();
       sendResponse({ success: true });

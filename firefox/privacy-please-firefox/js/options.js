@@ -15,6 +15,7 @@ document.addEventListener('DOMContentLoaded', function() {
   // Load settings from background script
   function loadSettings() {
     chrome.runtime.sendMessage({ action: 'getSettings' }, function(response) {
+      console.log(response.settings);
       currentSettings = response.settings;
       
       // Check if all sites are enabled
@@ -89,7 +90,7 @@ document.addEventListener('DOMContentLoaded', function() {
     select.id = `instance-${site}`;
     select.dataset.site = site;
     select.className = 'instance-select';
-    
+
     // Add instances as options
     settings.instances.forEach(instance => {
       const option = document.createElement('option');
@@ -107,6 +108,10 @@ document.addEventListener('DOMContentLoaded', function() {
     customOption.textContent = "Custom";
 
     select.appendChild(customOption);
+
+    if(settings.customPreferredInstance){
+      select.lastChild.selected = true;
+    }
 
     select.addEventListener('change', (e) => {
       //add custom instance field, if "Custom" option selected
@@ -127,6 +132,15 @@ document.addEventListener('DOMContentLoaded', function() {
 
     instanceSelector.appendChild(instanceLabel);
     instanceSelector.appendChild(select);
+
+    if(settings.customPreferredInstance){
+      const customField = document.createElement("input");
+
+      customField.type = "url";
+      customField.value = settings.preferredInstance;
+
+      instanceSelector.appendChild(customField);
+    }
 
     body.appendChild(instanceSelector);
 
@@ -160,9 +174,17 @@ document.addEventListener('DOMContentLoaded', function() {
     
     instanceSelects.forEach(select => {
       const site = select.dataset.site;
-      currentSettings[site].preferredInstance = select.value;
+      if(select.value !== "Custom"){
+        currentSettings[site].customPreferredInstance = false
+        currentSettings[site].preferredInstance = select.value;
+      }
+      else {
+        currentSettings[site].customPreferredInstance = true;
+        currentSettings[site].preferredInstance = select.nextSibling.value;
+      }
+      
     });
-    
+   
     // Send updated settings to background script
     for (const [site, settings] of Object.entries(currentSettings)) {
       chrome.runtime.sendMessage({
@@ -170,6 +192,7 @@ document.addEventListener('DOMContentLoaded', function() {
         data: {
           site: site,
           enabled: settings.enabled,
+          customPreferredInstance: settings.customPreferredInstance,
           preferredInstance: settings.preferredInstance
         }
       });
