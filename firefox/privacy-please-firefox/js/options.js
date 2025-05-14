@@ -101,26 +101,35 @@ document.addEventListener('DOMContentLoaded', function() {
       select.appendChild(option);
     });
 
+    //create and add "Custom" option
     const customOption = document.createElement('option');
 
     customOption.textContent = "Custom";
 
     select.appendChild(customOption);
 
+    select.addEventListener('change', (e) => {
+      //add custom instance field, if "Custom" option selected
+      if(e.target.value === "Custom"){
+        const customField = document.createElement("input");
 
-    //const customOptionField = document.createElement('input');
-    
-    //customOptionField.type = "url";
-    
-   // customOption.appendChild(customOptionField);
+        customField.type = "url";
 
-    //select.appendChild(customOption)
+        e.target.parentElement.appendChild(customField);
+      }
+      else {
+        //remove custom instance field, if not needed
+        if(e.target.nextSibling.localName === "input"){
+          e.target.nextSibling.remove();
+        }
+      }
+    })
 
     instanceSelector.appendChild(instanceLabel);
     instanceSelector.appendChild(select);
-    
+
     body.appendChild(instanceSelector);
-    
+
     // Add all elements to card
     card.appendChild(header);
     card.appendChild(body);
@@ -221,9 +230,10 @@ document.addEventListener('DOMContentLoaded', function() {
     saveBtn.addEventListener('click', saveSettings);
     
     // Reset button
-    resetBtn.addEventListener('click', resetSettings);
+    resetBtn.addEventListener('click', resetSettings); 
   }
-  
+
+ 
   // Set up event listeners
   setupEventListeners();
 });
