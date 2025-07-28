@@ -118,14 +118,9 @@ document.addEventListener('DOMContentLoaded', function() {
       if(e.target.value === "Custom"){
         const customField = document.createElement("input");
 
-        customField.type = "url";
+        customField.className = "custom-instance-input";
 
-        //Styling
-        customField.style.marginTop = "5px"
-        customField.style.border = "1px solid #ddd"
-        customField.style.borderRadius = "4px"
-        customField.style.padding = "8px"
-        customField.style.width = "97.5%" //Kinda hacky, but hey...
+        customField.type = "url";
 
         e.target.parentElement.appendChild(customField);
       }
@@ -142,6 +137,8 @@ document.addEventListener('DOMContentLoaded', function() {
 
     if(settings.customPreferredInstance){
       const customField = document.createElement("input");
+
+      customField.className = "custom-instance-input";
 
       customField.type = "url";
       customField.value = settings.preferredInstance;

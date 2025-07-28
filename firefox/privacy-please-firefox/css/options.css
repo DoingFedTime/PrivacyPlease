@@ -91,6 +91,14 @@ header p {
   background-color: #fff;
 }
 
+.custom-instance-input {
+  margin-top: 5px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  padding: 8px;
+  width: 97.5%; /*Kinda hacky, but hey... */
+}
+
 .actions {
   display: flex;
   justify-content: center;
