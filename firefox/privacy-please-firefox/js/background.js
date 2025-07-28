@@ -501,7 +501,7 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
     sendResponse({ settings: redirectMappings });
   } else if (message.action === 'updateSettings') {
     const { site, enabled, preferredInstance, customPreferredInstance } = message.data;
-    console.log(message.data)
+    // console.log(message.data)
     if (redirectMappings[site]) {
       redirectMappings[site].enabled = enabled;
       if (preferredInstance) {

@@ -120,6 +120,13 @@ document.addEventListener('DOMContentLoaded', function() {
 
         customField.type = "url";
 
+        //Styling
+        customField.style.marginTop = "5px"
+        customField.style.border = "1px solid #ddd"
+        customField.style.borderRadius = "4px"
+        customField.style.padding = "8px"
+        customField.style.width = "97.5%" //Kinda hacky, but hey...
+
         e.target.parentElement.appendChild(customField);
       }
       else {
