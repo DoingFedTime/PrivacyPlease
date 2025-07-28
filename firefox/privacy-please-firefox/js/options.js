@@ -125,9 +125,9 @@ document.addEventListener('DOMContentLoaded', function() {
         e.target.parentElement.appendChild(customField);
       }
       else {
-        //remove custom instance field, if not needed
+        //hide custom instance field, if not needed
         if(e.target.nextSibling.localName === "input"){
-          e.target.nextSibling.remove();
+          e.target.nextSibling.style.display = "none";
         }
       }
     })
