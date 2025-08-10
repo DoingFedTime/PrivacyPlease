@@ -95,8 +95,8 @@ function initializeDefaultSettings() {
     },
     'reddit.com': {
       enabled: true,
-      preferredInstance: 'https://redlib.catsarch.com',
-      instances: ['https://redlib.catsarch.com', 'https://redlib.perennialte.ch', 'https://redlib.tux.pizza', 'https://libreddit.privacydev.net', 'https://rl.bloat.cat', 'https://redlib.r4fo.com', 'https://reddit.owo.si', 'https://redlib.ducks.party', 'https://red.ngn.tf', 'https://red.artemislena.eu', 'https://r.darrennathanael.com', 'https://redlib.kittywi.re', 'https://redlib.privacyredirect.com', 'https://reddit.nerdvpn.de', 'https://redlib.baczek.me', 'https://redlib.nadeko.net', 'https://redlib.private.coffee', 'https://redlib.4o1x5.dev', 'https://redlib.privacy.com.de']
+      preferredInstance: 'https://safereddit.com',
+      instances: ['https://safereddit.com', 'https://eu.safereddit.com', 'https://l.opnxng.com', 'https://redlib.perennialte.ch', 'https://redlib.tux.pizza', 'https://libreddit.privacydev.net', 'https://rl.bloat.cat', 'https://redlib.privacyredirect.com', 'https://reddit.nerdvpn.de', 'https://redlib.4o1x5.dev', 'https://reddit.adminforge.de', 'https://rl.blitzw.in', 'https://reddit.rtrace.io', 'https://lr.ptr.moe', 'https://redlib.orangenet.cc', 'https://redlib.privadency.com', 'https://redlib.minihoot.site']
     },
     'instagram.com': {
       enabled: true,
@@ -137,8 +137,30 @@ function initializeDefaultSettings() {
       enabled: true,
       preferredInstance: 'https://libremdb.iket.me',
       instances: ['https://libremdb.iket.me', 'https://d.opnxng.com', 'https://lmdb.bloat.cat', 'https://libremdb.catsarch.com', 'https://imdb.nerdvpn.de', 'https://libremdb.canine.tools']
+    },
+    'stackoverflow.com': {
+      enabled: true,
+      preferredInstance: 'https://code.whatever.social',
+      instances: ['https://code.whatever.social']
+    },
+    'tumblr.com': {
+      enabled: true,
+      preferredInstance: 'https://pb.bloat.cat',
+      instances: ['https://pb.bloat.cat', 'https://tb.opnxng.com', 'https://priviblur.pussthecat.org', 'https://priviblur.thebunny.zone', 'https://priviblur.canine.tools', 'https://pb.cleberg.net', 'https://tumblr.nerdvpn.de']
+    },
+    'twitch.tv': {
+      enabled: true,
+      preferredInstance: 'https://safetwitch.drgns.space',
+      instances: ['https://safetwitch.drgns.space']
     }
   };
+  
+  // Initialize customInstances array for all sites
+  Object.keys(siteSettings).forEach(site => {
+    if (!siteSettings[site].customInstances) {
+      siteSettings[site].customInstances = [];
+    }
+  });
   
   // Save default settings
   saveSettings();
@@ -194,12 +216,23 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
     sendResponse({ success: true });
   } else if (message.action === 'updateSettings' || message.action === 'updateSiteSettings') {
     // Handle both updateSettings (from options.js) and updateSiteSettings (if used elsewhere)
-    const { site, enabled, preferredInstance } = message.data;
+    const { site, enabled, preferredInstance, customInstances } = message.data;
     if (siteSettings[site]) {
       siteSettings[site].enabled = enabled;
+      
+      // Update custom instances if provided
+      if (customInstances !== undefined) {
+        siteSettings[site].customInstances = customInstances;
+      }
+      
       if (preferredInstance) {
-        // Validate that preferredInstance is in the instances array
-        if (siteSettings[site].instances && siteSettings[site].instances.includes(preferredInstance)) {
+        // Validate that preferredInstance is in the instances array or custom instances
+        const allInstances = [
+          ...(siteSettings[site].instances || []),
+          ...(siteSettings[site].customInstances || [])
+        ];
+        
+        if (allInstances.includes(preferredInstance)) {
           siteSettings[site].preferredInstance = preferredInstance;
         } else {
           console.warn(`Invalid preferredInstance for ${site}: ${preferredInstance}. Setting to default.`);
