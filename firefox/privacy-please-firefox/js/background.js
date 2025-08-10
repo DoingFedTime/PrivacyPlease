@@ -436,7 +436,7 @@ function handleRedirect(details) {
   
   // Check each mapping to see if we should redirect
   for (const [site, settings] of Object.entries(redirectMappings)) {
-    if (settings.enabled && hostname.includes(site)) {
+    if (settings.enabled && (hostname === site || hostname === `www.${site}`)) {
       // Create the redirect URL
       const redirectUrl = createRedirectUrl(site, url);
       if (redirectUrl) {

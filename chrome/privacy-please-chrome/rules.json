@@ -9,7 +9,7 @@
       }
     },
     "condition": {
-      "regexFilter": "^https?://(?:www\\.)?youtube\\.com(/.*)",
+      "regexFilter": "^https?://(?:www\\.)?youtube\\.com(/(?!redirect).*)$",
       "resourceTypes": ["main_frame"]
     }
   },
@@ -19,7 +19,7 @@
     "action": {
       "type": "redirect",
       "redirect": {
-        "regexSubstitution": "https://beatbump.ml\\1"
+        "regexSubstitution": "https://beatbump.io\\1"
       }
     },
     "condition": {
@@ -75,7 +75,7 @@
     "action": {
       "type": "redirect",
       "redirect": {
-        "regexSubstitution": "https://proxigram.herokuapp.com\\1"
+        "regexSubstitution": "https://proxigram.lunar.icu\\1"
       }
     },
     "condition": {
