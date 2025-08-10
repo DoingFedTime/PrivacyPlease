@@ -155,6 +155,13 @@ function initializeDefaultSettings() {
     }
   };
   
+  // Initialize customInstances array for all sites
+  Object.keys(siteSettings).forEach(site => {
+    if (!siteSettings[site].customInstances) {
+      siteSettings[site].customInstances = [];
+    }
+  });
+  
   // Save default settings
   saveSettings();
 }
@@ -209,12 +216,23 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
     sendResponse({ success: true });
   } else if (message.action === 'updateSettings' || message.action === 'updateSiteSettings') {
     // Handle both updateSettings (from options.js) and updateSiteSettings (if used elsewhere)
-    const { site, enabled, preferredInstance } = message.data;
+    const { site, enabled, preferredInstance, customInstances } = message.data;
     if (siteSettings[site]) {
       siteSettings[site].enabled = enabled;
+      
+      // Update custom instances if provided
+      if (customInstances !== undefined) {
+        siteSettings[site].customInstances = customInstances;
+      }
+      
       if (preferredInstance) {
-        // Validate that preferredInstance is in the instances array
-        if (siteSettings[site].instances && siteSettings[site].instances.includes(preferredInstance)) {
+        // Validate that preferredInstance is in the instances array or custom instances
+        const allInstances = [
+          ...(siteSettings[site].instances || []),
+          ...(siteSettings[site].customInstances || [])
+        ];
+        
+        if (allInstances.includes(preferredInstance)) {
           siteSettings[site].preferredInstance = preferredInstance;
         } else {
           console.warn(`Invalid preferredInstance for ${site}: ${preferredInstance}. Setting to default.`);

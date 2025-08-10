@@ -201,3 +201,120 @@ input:checked + .slider:before {
 .slider.round:before {
   border-radius: 50%;
 }
+
+/* Custom Instance Styling */
+.custom-instance-section {
+  margin-top: 15px;
+  padding-top: 10px;
+  border-top: 1px solid #ecf0f1;
+}
+
+.add-custom-btn {
+  background-color: #27ae60;
+  color: white;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 12px;
+  transition: background-color 0.3s;
+}
+
+.add-custom-btn:hover {
+  background-color: #219a52;
+}
+
+.custom-input-container {
+  display: flex;
+  gap: 8px;
+  margin-top: 10px;
+  align-items: center;
+}
+
+.custom-instance-input {
+  flex: 1;
+  padding: 8px 12px;
+  border: 1px solid #bdc3c7;
+  border-radius: 4px;
+  font-size: 12px;
+}
+
+.custom-instance-input:focus {
+  outline: none;
+  border-color: #3498db;
+  box-shadow: 0 0 5px rgba(52, 152, 219, 0.3);
+}
+
+.custom-add-btn, .custom-cancel-btn {
+  padding: 8px 12px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 12px;
+  transition: background-color 0.3s;
+}
+
+.custom-add-btn {
+  background-color: #3498db;
+  color: white;
+}
+
+.custom-add-btn:hover {
+  background-color: #2980b9;
+}
+
+.custom-cancel-btn {
+  background-color: #95a5a6;
+  color: white;
+}
+
+.custom-cancel-btn:hover {
+  background-color: #7f8c8d;
+}
+
+.custom-instances-list {
+  margin-top: 10px;
+}
+
+.custom-instances-title {
+  font-weight: bold;
+  font-size: 12px;
+  color: #34495e;
+  margin-bottom: 8px;
+}
+
+.custom-instance-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 6px 10px;
+  background-color: #f8f9fa;
+  border: 1px solid #e9ecef;
+  border-radius: 4px;
+  margin-bottom: 4px;
+  font-size: 12px;
+}
+
+.remove-custom-btn {
+  background-color: #e74c3c;
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.3s;
+}
+
+.remove-custom-btn:hover {
+  background-color: #c0392b;
+}
+
+.custom-option {
+  font-style: italic;
+  background-color: #f8f9fa;
+}

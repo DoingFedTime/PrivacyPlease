@@ -473,6 +473,13 @@ function saveSettings() {
 async function initialize() {
   await loadSettings();
   
+  // Initialize customInstances for all sites
+  Object.keys(redirectMappings).forEach(site => {
+    if (!redirectMappings[site].customInstances) {
+      redirectMappings[site].customInstances = [];
+    }
+  });
+  
   // Set up webRequest listener for redirection
   chrome.webRequest.onBeforeRequest.addListener(
     handleRedirect,
@@ -536,11 +543,27 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
   if (message.action === 'getSettings') {
     sendResponse({ settings: redirectMappings });
   } else if (message.action === 'updateSettings') {
-    const { site, enabled, preferredInstance } = message.data;
+    const { site, enabled, preferredInstance, customInstances } = message.data;
     if (redirectMappings[site]) {
       redirectMappings[site].enabled = enabled;
+      
+      // Update custom instances if provided
+      if (customInstances !== undefined) {
+        redirectMappings[site].customInstances = customInstances;
+      }
+      
       if (preferredInstance) {
-        redirectMappings[site].preferredInstance = preferredInstance;
+        // Validate that preferredInstance is in the instances array or custom instances
+        const allInstances = [
+          ...(redirectMappings[site].instances || []),
+          ...(redirectMappings[site].customInstances || [])
+        ];
+        
+        if (allInstances.includes(preferredInstance)) {
+          redirectMappings[site].preferredInstance = preferredInstance;
+        } else {
+          console.warn(`Invalid preferredInstance for ${site}: ${preferredInstance}`);
+        }
       }
       saveSettings();
       sendResponse({ success: true });
