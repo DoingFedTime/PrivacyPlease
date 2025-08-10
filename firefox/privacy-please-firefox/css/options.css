@@ -132,6 +132,15 @@ footer {
   font-size: 12px;
 }
 
+footer a {
+  color: #3498db;
+  text-decoration: none;
+}
+
+footer a:hover {
+  text-decoration: underline;
+}
+
 /* Switch styling */
 .switch {
   position: relative;

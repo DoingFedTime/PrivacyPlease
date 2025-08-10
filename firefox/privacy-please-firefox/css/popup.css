@@ -92,7 +92,9 @@ h2 {
 
 .footer {
   display: flex;
-  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
 }
 
 #options-btn {
@@ -108,6 +110,17 @@ h2 {
 
 #options-btn:hover {
   background-color: #2980b9;
+}
+
+.github-link a {
+  color: #7f8c8d;
+  text-decoration: none;
+  font-size: 12px;
+}
+
+.github-link a:hover {
+  color: #2c3e50;
+  text-decoration: underline;
 }
 
 /* Switch styling */
