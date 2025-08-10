@@ -91,11 +91,16 @@ header p {
   background-color: #fff;
 }
 
-.actions {
+.actions, .actions-top {
   display: flex;
   justify-content: center;
   gap: 15px;
   margin-top: 20px;
+}
+
+.actions-top {
+  margin-bottom: 20px;
+  margin-top: 0;
 }
 
 .primary-btn, .secondary-btn {
