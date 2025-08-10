@@ -126,15 +126,18 @@ const redirectMappings = {
   // RedLib instances: https://github.com/redlib-org/redlib-instances/blob/main/instances.json
   'reddit.com': {
     enabled: true,
-    redirectTo: 'https://safereddit.com',
+    redirectTo: 'https://l.opnxng.com',
     instances: [
+      'https://l.opnxng.com',
+      'https://libreddit.privacydev.net',
+      'https://reddit.idevicehacked.com',
+      'https://redlib.catsarch.com',
+      'https://redlib.freedit.eu',
+      'https://rl.bloat.cat',
       'https://safereddit.com',
       'https://eu.safereddit.com',
-      'https://l.opnxng.com',
       'https://redlib.perennialte.ch',
       'https://redlib.tux.pizza',
-      'https://libreddit.privacydev.net',
-      'https://rl.bloat.cat',
       'https://redlib.privacyredirect.com',
       'https://reddit.nerdvpn.de',
       'https://redlib.4o1x5.dev',
@@ -146,7 +149,7 @@ const redirectMappings = {
       'https://redlib.privadency.com',
       'https://redlib.minihoot.site'
     ],
-    preferredInstance: 'https://safereddit.com',
+    preferredInstance: 'https://l.opnxng.com',
     pathHandlers: {
       '/r/': (url) => {
         return url.pathname + url.search;

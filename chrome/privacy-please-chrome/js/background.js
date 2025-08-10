@@ -95,8 +95,8 @@ function initializeDefaultSettings() {
     },
     'reddit.com': {
       enabled: true,
-      preferredInstance: 'https://safereddit.com',
-      instances: ['https://safereddit.com', 'https://eu.safereddit.com', 'https://l.opnxng.com', 'https://redlib.perennialte.ch', 'https://redlib.tux.pizza', 'https://libreddit.privacydev.net', 'https://rl.bloat.cat', 'https://redlib.privacyredirect.com', 'https://reddit.nerdvpn.de', 'https://redlib.4o1x5.dev', 'https://reddit.adminforge.de', 'https://rl.blitzw.in', 'https://reddit.rtrace.io', 'https://lr.ptr.moe', 'https://redlib.orangenet.cc', 'https://redlib.privadency.com', 'https://redlib.minihoot.site']
+      preferredInstance: 'https://l.opnxng.com',
+      instances: ['https://l.opnxng.com', 'https://libreddit.privacydev.net', 'https://reddit.idevicehacked.com', 'https://redlib.catsarch.com', 'https://redlib.freedit.eu', 'https://rl.bloat.cat', 'https://safereddit.com', 'https://eu.safereddit.com', 'https://redlib.perennialte.ch', 'https://redlib.tux.pizza', 'https://redlib.privacyredirect.com', 'https://reddit.nerdvpn.de', 'https://redlib.4o1x5.dev', 'https://reddit.adminforge.de', 'https://rl.blitzw.in', 'https://reddit.rtrace.io', 'https://lr.ptr.moe', 'https://redlib.orangenet.cc', 'https://redlib.privadency.com', 'https://redlib.minihoot.site']
     },
     'instagram.com': {
       enabled: true,
