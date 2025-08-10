@@ -61,7 +61,7 @@
     "action": {
       "type": "redirect",
       "redirect": {
-        "regexSubstitution": "https://libredd.it\\1"
+        "regexSubstitution": "https://redlib.catsarch.com\\1"
       }
     },
     "condition": {
