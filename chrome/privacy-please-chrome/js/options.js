@@ -90,7 +90,7 @@ document.addEventListener('DOMContentLoaded', function() {
     select.dataset.site = site;
     select.className = 'instance-select';
     
-    // Add instances as options
+    // Add predefined instances as options
     settings.instances.forEach(instance => {
       const option = document.createElement('option');
       option.value = instance;
@@ -101,10 +101,98 @@ document.addEventListener('DOMContentLoaded', function() {
       select.appendChild(option);
     });
     
+    // Add custom instances as options
+    if (settings.customInstances && settings.customInstances.length > 0) {
+      const separator = document.createElement('option');
+      separator.disabled = true;
+      separator.textContent = '──────────';
+      select.appendChild(separator);
+      
+      settings.customInstances.forEach(instance => {
+        const option = document.createElement('option');
+        option.value = instance;
+        option.textContent = `${instance} (Custom)`;
+        option.className = 'custom-option';
+        if (instance === settings.preferredInstance) {
+          option.selected = true;
+        }
+        select.appendChild(option);
+      });
+    }
+    
     instanceSelector.appendChild(instanceLabel);
     instanceSelector.appendChild(select);
     
     body.appendChild(instanceSelector);
+    
+    // Add custom instance section
+    const customSection = document.createElement('div');
+    customSection.className = 'custom-instance-section';
+    
+    const addCustomBtn = document.createElement('button');
+    addCustomBtn.className = 'add-custom-btn';
+    addCustomBtn.textContent = '+ Add Custom Instance';
+    addCustomBtn.dataset.site = site;
+    
+    const customInputContainer = document.createElement('div');
+    customInputContainer.className = 'custom-input-container';
+    customInputContainer.style.display = 'none';
+    
+    const customInput = document.createElement('input');
+    customInput.type = 'url';
+    customInput.className = 'custom-instance-input';
+    customInput.placeholder = 'https://your-custom-instance.com';
+    customInput.dataset.site = site;
+    
+    const addBtn = document.createElement('button');
+    addBtn.className = 'custom-add-btn';
+    addBtn.textContent = 'Add';
+    addBtn.dataset.site = site;
+    
+    const cancelBtn = document.createElement('button');
+    cancelBtn.className = 'custom-cancel-btn';
+    cancelBtn.textContent = 'Cancel';
+    
+    customInputContainer.appendChild(customInput);
+    customInputContainer.appendChild(addBtn);
+    customInputContainer.appendChild(cancelBtn);
+    
+    customSection.appendChild(addCustomBtn);
+    customSection.appendChild(customInputContainer);
+    
+    body.appendChild(customSection);
+    
+    // Show any existing custom instances
+    if (settings.customInstances && settings.customInstances.length > 0) {
+      const customList = document.createElement('div');
+      customList.className = 'custom-instances-list';
+      
+      const customTitle = document.createElement('div');
+      customTitle.className = 'custom-instances-title';
+      customTitle.textContent = 'Custom Instances:';
+      customList.appendChild(customTitle);
+      
+      settings.customInstances.forEach((instance, index) => {
+        const customItem = document.createElement('div');
+        customItem.className = 'custom-instance-item';
+        
+        const instanceUrl = document.createElement('span');
+        instanceUrl.textContent = instance;
+        
+        const removeBtn = document.createElement('button');
+        removeBtn.className = 'remove-custom-btn';
+        removeBtn.textContent = '×';
+        removeBtn.dataset.site = site;
+        removeBtn.dataset.instance = instance;
+        removeBtn.title = 'Remove custom instance';
+        
+        customItem.appendChild(instanceUrl);
+        customItem.appendChild(removeBtn);
+        customList.appendChild(customItem);
+      });
+      
+      body.appendChild(customList);
+    }
     
     // Add all elements to card
     card.appendChild(header);
@@ -148,7 +236,8 @@ document.addEventListener('DOMContentLoaded', function() {
           data: {
             site: site,
             enabled: settings.enabled,
-            preferredInstance: settings.preferredInstance
+            preferredInstance: settings.preferredInstance,
+            customInstances: settings.customInstances || []
           }
         }, (response) => {
           if (chrome.runtime.lastError) {
@@ -251,6 +340,160 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Reset button
     resetBtn.addEventListener('click', resetSettings);
+    
+    // Custom instance event listeners
+    document.addEventListener('click', function(e) {
+      // Add custom instance button
+      if (e.target.classList.contains('add-custom-btn')) {
+        const site = e.target.dataset.site;
+        const container = e.target.nextElementSibling;
+        container.style.display = 'block';
+        e.target.style.display = 'none';
+        container.querySelector('.custom-instance-input').focus();
+      }
+      
+      // Cancel custom instance
+      if (e.target.classList.contains('custom-cancel-btn')) {
+        const container = e.target.parentElement;
+        const addBtn = container.previousElementSibling;
+        container.style.display = 'none';
+        addBtn.style.display = 'block';
+        container.querySelector('.custom-instance-input').value = '';
+      }
+      
+      // Add custom instance
+      if (e.target.classList.contains('custom-add-btn')) {
+        const site = e.target.dataset.site;
+        const input = e.target.parentElement.querySelector('.custom-instance-input');
+        const url = input.value.trim();
+        
+        if (validateCustomInstance(url)) {
+          addCustomInstance(site, url);
+          // Hide input container
+          const container = e.target.parentElement;
+          const addBtn = container.previousElementSibling;
+          container.style.display = 'none';
+          addBtn.style.display = 'block';
+          input.value = '';
+        } else {
+          showCustomInstanceError('Please enter a valid HTTPS URL');
+        }
+      }
+      
+      // Remove custom instance
+      if (e.target.classList.contains('remove-custom-btn')) {
+        const site = e.target.dataset.site;
+        const instance = e.target.dataset.instance;
+        removeCustomInstance(site, instance);
+      }
+    });
+    
+    // Enter key in custom instance input
+    document.addEventListener('keypress', function(e) {
+      if (e.target.classList.contains('custom-instance-input') && e.key === 'Enter') {
+        const addBtn = e.target.nextElementSibling;
+        addBtn.click();
+      }
+    });
+  }
+  
+  // Validate custom instance URL
+  function validateCustomInstance(url) {
+    try {
+      const urlObj = new URL(url);
+      return urlObj.protocol === 'https:' && urlObj.hostname.length > 0;
+    } catch (e) {
+      return false;
+    }
+  }
+  
+  // Add custom instance
+  function addCustomInstance(site, url) {
+    if (!currentSettings[site].customInstances) {
+      currentSettings[site].customInstances = [];
+    }
+    
+    // Check if instance already exists
+    const allInstances = [...currentSettings[site].instances, ...currentSettings[site].customInstances];
+    if (allInstances.includes(url)) {
+      showCustomInstanceError('This instance already exists');
+      return;
+    }
+    
+    currentSettings[site].customInstances.push(url);
+    
+    // Refresh the site card to show the new custom instance
+    populateSitesContainer();
+    
+    showCustomInstanceSuccess('Custom instance added successfully');
+  }
+  
+  // Remove custom instance
+  function removeCustomInstance(site, instance) {
+    if (currentSettings[site].customInstances) {
+      const index = currentSettings[site].customInstances.indexOf(instance);
+      if (index > -1) {
+        currentSettings[site].customInstances.splice(index, 1);
+        
+        // If this was the preferred instance, reset to default
+        if (currentSettings[site].preferredInstance === instance) {
+          currentSettings[site].preferredInstance = currentSettings[site].instances[0];
+        }
+        
+        // Refresh the site card
+        populateSitesContainer();
+        
+        showCustomInstanceSuccess('Custom instance removed successfully');
+      }
+    }
+  }
+  
+  // Show custom instance success message
+  function showCustomInstanceSuccess(message) {
+    const successDiv = document.createElement('div');
+    successDiv.className = 'custom-instance-message success';
+    successDiv.textContent = message;
+    successDiv.style.position = 'fixed';
+    successDiv.style.top = '20px';
+    successDiv.style.right = '20px';
+    successDiv.style.backgroundColor = '#2ecc71';
+    successDiv.style.color = 'white';
+    successDiv.style.padding = '10px 15px';
+    successDiv.style.borderRadius = '4px';
+    successDiv.style.boxShadow = '0 2px 5px rgba(0,0,0,0.2)';
+    successDiv.style.zIndex = '9999';
+    
+    document.body.appendChild(successDiv);
+    
+    setTimeout(() => {
+      if (document.body.contains(successDiv)) {
+        document.body.removeChild(successDiv);
+      }
+    }, 3000);
+  }
+  
+  // Show custom instance error message
+  function showCustomInstanceError(message) {
+    const errorDiv = document.createElement('div');
+    errorDiv.className = 'custom-instance-message error';
+    errorDiv.textContent = message;
+    errorDiv.style.position = 'fixed';
+    errorDiv.style.top = '20px';
+    errorDiv.style.right = '20px';
+    errorDiv.style.backgroundColor = '#e74c3c';
+    errorDiv.style.color = 'white';
+    errorDiv.style.padding = '10px 15px';
+    errorDiv.style.borderRadius = '4px';
+    errorDiv.style.boxShadow = '0 2px 5px rgba(0,0,0,0.2)';
+    errorDiv.style.zIndex = '9999';
+    
+    document.body.appendChild(errorDiv);
+    
+    setTimeout(() => {
+      if (document.body.contains(errorDiv)) {
+        document.body.removeChild(errorDiv);
+      }
+    }, 4000);
   }
   
   // Set up event listeners
