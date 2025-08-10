@@ -111,7 +111,7 @@ function initializeDefaultSettings() {
     'translate.google.com': {
       enabled: true,
       preferredInstance: 'https://lingva.ml',
-      instances: ['https://lingva.ml', 'https://lingva.garudalinux.org', 'https://translate.plausibility.cloud', 'https://lingva.lunar.icu', 'https://translate.projectsegfau.lt']
+      instances: ['https://lingva.ml', 'https://lingva.garudalinux.org', 'https://translate.plausibility.cloud', 'https://lingva.lunar.icu', 'https://translate.projectsegfau.lt', 'https://simplytranslate.org', 'https://st.adast.dk', 'https://simplytranslate.ducks.party', 'https://simplytranslate.aketawi.space']
     },
     'google.com': {
       enabled: true,

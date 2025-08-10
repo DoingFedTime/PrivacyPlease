@@ -211,9 +211,10 @@ const redirectMappings = {
     }
   },
   
-  // Google Translate to Lingva Translate
+  // Google Translate to Lingva Translate & SimplyTranslate
   // needs to be before Google so it doesn't get caught by it's redirect
   // Lingva instances: https://github.com/thedaviddelta/lingva-translate
+  // SimplyTranslate instances: https://simple-web.org/projects/simplytranslate.html
   'translate.google.com': {
     enabled: true,
     redirectTo: 'https://lingva.ml',
@@ -222,7 +223,11 @@ const redirectMappings = {
       'https://lingva.garudalinux.org',
       'https://translate.plausibility.cloud',
       'https://lingva.lunar.icu',
-      'https://translate.projectsegfau.lt'
+      'https://translate.projectsegfau.lt',
+      'https://simplytranslate.org',
+      'https://st.adast.dk',
+      'https://simplytranslate.ducks.party',
+      'https://simplytranslate.aketawi.space'
     ],
     preferredInstance: 'https://lingva.ml',
     pathHandlers: {
