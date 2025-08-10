@@ -123,7 +123,7 @@ document.addEventListener('DOMContentLoaded', function() {
   }
   
   // Save settings to background script
-  function saveSettings() {
+  async function saveSettings() {
     // Get all site toggles
     const siteToggles = document.querySelectorAll('.site-toggle');
     const instanceSelects = document.querySelectorAll('.instance-select');
@@ -139,20 +139,38 @@ document.addEventListener('DOMContentLoaded', function() {
       currentSettings[site].preferredInstance = select.value;
     });
     
-    // Send updated settings to background script
+    // Create promises for all save operations
+    const savePromises = [];
     for (const [site, settings] of Object.entries(currentSettings)) {
-      chrome.runtime.sendMessage({
-        action: 'updateSettings',
-        data: {
-          site: site,
-          enabled: settings.enabled,
-          preferredInstance: settings.preferredInstance
-        }
+      const promise = new Promise((resolve, reject) => {
+        chrome.runtime.sendMessage({
+          action: 'updateSettings',
+          data: {
+            site: site,
+            enabled: settings.enabled,
+            preferredInstance: settings.preferredInstance
+          }
+        }, (response) => {
+          if (chrome.runtime.lastError) {
+            reject(new Error(`Failed to save ${site}: ${chrome.runtime.lastError.message}`));
+          } else if (response && response.success) {
+            resolve(site);
+          } else {
+            reject(new Error(`Failed to save ${site}: ${response?.error || 'Unknown error'}`));
+          }
+        });
       });
+      savePromises.push(promise);
     }
     
-    // Show save confirmation
-    showSaveConfirmation();
+    try {
+      // Wait for all save operations to complete
+      await Promise.all(savePromises);
+      showSaveConfirmation();
+    } catch (error) {
+      console.error('Save operation failed:', error);
+      showSaveError(error.message);
+    }
   }
   
   // Show save confirmation message
@@ -176,6 +194,32 @@ document.addEventListener('DOMContentLoaded', function() {
     setTimeout(() => {
       document.body.removeChild(confirmation);
     }, 3000);
+  }
+  
+  // Show save error message
+  function showSaveError(errorMessage) {
+    const errorDiv = document.createElement('div');
+    errorDiv.className = 'save-error';
+    errorDiv.textContent = `Error saving settings: ${errorMessage}`;
+    errorDiv.style.position = 'fixed';
+    errorDiv.style.top = '20px';
+    errorDiv.style.left = '50%';
+    errorDiv.style.transform = 'translateX(-50%)';
+    errorDiv.style.backgroundColor = '#e74c3c';
+    errorDiv.style.color = 'white';
+    errorDiv.style.padding = '10px 20px';
+    errorDiv.style.borderRadius = '4px';
+    errorDiv.style.boxShadow = '0 2px 5px rgba(0,0,0,0.2)';
+    errorDiv.style.zIndex = '9999';
+    
+    document.body.appendChild(errorDiv);
+    
+    // Remove error message after 5 seconds
+    setTimeout(() => {
+      if (document.body.contains(errorDiv)) {
+        document.body.removeChild(errorDiv);
+      }
+    }, 5000);
   }
   
   // Reset settings to defaults
