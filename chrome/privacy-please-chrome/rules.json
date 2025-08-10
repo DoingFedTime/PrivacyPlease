@@ -166,5 +166,47 @@
       "regexFilter": "^https?://(?:www\\.)?imdb\\.com(/.*)",
       "resourceTypes": ["main_frame"]
     }
+  },
+  {
+    "id": 13,
+    "priority": 1,
+    "action": {
+      "type": "redirect",
+      "redirect": {
+        "regexSubstitution": "https://code.whatever.social\\1"
+      }
+    },
+    "condition": {
+      "regexFilter": "^https?://(?:www\\.)?stackoverflow\\.com(/.*)",
+      "resourceTypes": ["main_frame"]
+    }
+  },
+  {
+    "id": 14,
+    "priority": 1,
+    "action": {
+      "type": "redirect",
+      "redirect": {
+        "regexSubstitution": "https://pb.bloat.cat\\2"
+      }
+    },
+    "condition": {
+      "regexFilter": "^https?://(?:(?:www\\.)?tumblr\\.com|([^.]+)\\.tumblr\\.com)(/.*)",
+      "resourceTypes": ["main_frame"]
+    }
+  },
+  {
+    "id": 15,
+    "priority": 1,
+    "action": {
+      "type": "redirect",
+      "redirect": {
+        "regexSubstitution": "https://safetwitch.drgns.space\\1"
+      }
+    },
+    "condition": {
+      "regexFilter": "^https?://(?:www\\.)?twitch\\.tv(/.*)",
+      "resourceTypes": ["main_frame"]
+    }
   }
 ]

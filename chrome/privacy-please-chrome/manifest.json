@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "Privacy Please",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Automatically redirects from regular websites to privacy-focused frontend alternatives",
   "permissions": [
     "storage",
@@ -18,7 +18,11 @@
     "*://*.google.com/*",
     "*://*.medium.com/*",
     "*://*.imgur.com/*",
-    "*://*.quora.com/*"
+    "*://*.quora.com/*",
+    "*://*.imdb.com/*",
+    "*://*.stackoverflow.com/*",
+    "*://*.tumblr.com/*",
+    "*://*.twitch.tv/*"
   ],
   "background": {
     "service_worker": "js/background.js"
