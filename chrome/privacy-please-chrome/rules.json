@@ -9,7 +9,7 @@
       }
     },
     "condition": {
-      "regexFilter": "^https?://(?:www\\.)?youtube\\.com(/.*)",
+      "regexFilter": "^https?://(?:www\\.)?youtube\\.com(/(?!redirect).*)$",
       "resourceTypes": ["main_frame"]
     }
   },
@@ -19,7 +19,7 @@
     "action": {
       "type": "redirect",
       "redirect": {
-        "regexSubstitution": "https://beatbump.ml\\1"
+        "regexSubstitution": "https://beatbump.io\\1"
       }
     },
     "condition": {
@@ -75,7 +75,7 @@
     "action": {
       "type": "redirect",
       "redirect": {
-        "regexSubstitution": "https://proxigram.herokuapp.com\\1"
+        "regexSubstitution": "https://proxigram.lunar.icu\\1"
       }
     },
     "condition": {
@@ -164,6 +164,48 @@
     },
     "condition": {
       "regexFilter": "^https?://(?:www\\.)?imdb\\.com(/.*)",
+      "resourceTypes": ["main_frame"]
+    }
+  },
+  {
+    "id": 13,
+    "priority": 1,
+    "action": {
+      "type": "redirect",
+      "redirect": {
+        "regexSubstitution": "https://code.whatever.social\\1"
+      }
+    },
+    "condition": {
+      "regexFilter": "^https?://(?:www\\.)?stackoverflow\\.com(/.*)",
+      "resourceTypes": ["main_frame"]
+    }
+  },
+  {
+    "id": 14,
+    "priority": 1,
+    "action": {
+      "type": "redirect",
+      "redirect": {
+        "regexSubstitution": "https://pb.bloat.cat\\2"
+      }
+    },
+    "condition": {
+      "regexFilter": "^https?://(?:(?:www\\.)?tumblr\\.com|([^.]+)\\.tumblr\\.com)(/.*)",
+      "resourceTypes": ["main_frame"]
+    }
+  },
+  {
+    "id": 15,
+    "priority": 1,
+    "action": {
+      "type": "redirect",
+      "redirect": {
+        "regexSubstitution": "https://safetwitch.drgns.space\\1"
+      }
+    },
+    "condition": {
+      "regexFilter": "^https?://(?:www\\.)?twitch\\.tv(/.*)",
       "resourceTypes": ["main_frame"]
     }
   }

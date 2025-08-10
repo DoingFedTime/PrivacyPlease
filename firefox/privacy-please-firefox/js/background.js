@@ -126,32 +126,27 @@ const redirectMappings = {
   // RedLib instances: https://github.com/redlib-org/redlib-instances/blob/main/instances.json
   'reddit.com': {
     enabled: true,
-    redirectTo: 'https://redlib.catsarch.com',
+    redirectTo: 'https://safereddit.com',
     instances: [
-      'https://redlib.catsarch.com',
+      'https://safereddit.com',
+      'https://eu.safereddit.com',
+      'https://l.opnxng.com',
       'https://redlib.perennialte.ch',
       'https://redlib.tux.pizza',
       'https://libreddit.privacydev.net',
       'https://rl.bloat.cat',
-      'https://redlib.r4fo.com',
-      'https://reddit.owo.si',
-      'https://redlib.ducks.party',
-      'https://red.ngn.tf',
-      'https://red.artemislena.eu',
-      'https://r.darrennathanael.com',
-      'https://redlib.kittywi.re',
       'https://redlib.privacyredirect.com',
       'https://reddit.nerdvpn.de',
-      'https://redlib.baczek.me',
-      'https://redlib.nadeko.net',
-      'https://redlib.private.coffee',
       'https://redlib.4o1x5.dev',
-      'https://redlib.privacy.com.de'
-      // aren't currently working, not loading properly and the instance is out of date
-      //'https://libreddit.projectsegfau.lt',
-      //'https://redlib.seasi.dev',
+      'https://reddit.adminforge.de',
+      'https://rl.blitzw.in',
+      'https://reddit.rtrace.io',
+      'https://lr.ptr.moe',
+      'https://redlib.orangenet.cc',
+      'https://redlib.privadency.com',
+      'https://redlib.minihoot.site'
     ],
-    preferredInstance: 'https://redlib.catsarch.com',
+    preferredInstance: 'https://safereddit.com',
     pathHandlers: {
       '/r/': (url) => {
         return url.pathname + url.search;
@@ -371,6 +366,63 @@ const redirectMappings = {
         return `/name/${nameId}`;
       }
     }
+  },
+  
+  // StackOverflow to AnonymousOverflow
+  'stackoverflow.com': {
+    enabled: true,
+    redirectTo: 'https://code.whatever.social',
+    instances: [
+      'https://code.whatever.social'
+    ],
+    preferredInstance: 'https://code.whatever.social',
+    pathHandlers: {
+      '/questions/': (url) => {
+        return url.pathname + url.search;
+      }
+    }
+  },
+  
+  // Tumblr to Priviblur
+  'tumblr.com': {
+    enabled: true,
+    redirectTo: 'https://pb.bloat.cat',
+    instances: [
+      'https://pb.bloat.cat',
+      'https://tb.opnxng.com',
+      'https://priviblur.pussthecat.org',
+      'https://priviblur.thebunny.zone',
+      'https://priviblur.canine.tools',
+      'https://pb.cleberg.net',
+      'https://tumblr.nerdvpn.de'
+    ],
+    preferredInstance: 'https://pb.bloat.cat',
+    pathHandlers: {
+      '': (url) => {
+        // Handle blog.tumblr.com patterns
+        const hostname = url.hostname;
+        if (hostname !== 'tumblr.com' && hostname !== 'www.tumblr.com') {
+          const blog = hostname.replace('.tumblr.com', '');
+          return `/${blog}` + url.pathname + url.search;
+        }
+        return url.pathname + url.search;
+      }
+    }
+  },
+  
+  // Twitch to SafeTwitch
+  'twitch.tv': {
+    enabled: true,
+    redirectTo: 'https://safetwitch.drgns.space',
+    instances: [
+      'https://safetwitch.drgns.space'
+    ],
+    preferredInstance: 'https://safetwitch.drgns.space',
+    pathHandlers: {
+      '/': (url) => {
+        return url.pathname + url.search;
+      }
+    }
   }
 };
 
@@ -410,6 +462,13 @@ function saveSettings() {
 async function initialize() {
   await loadSettings();
   
+  // Initialize customInstances for all sites
+  Object.keys(redirectMappings).forEach(site => {
+    if (!redirectMappings[site].customInstances) {
+      redirectMappings[site].customInstances = [];
+    }
+  });
+  
   // Set up webRequest listener for redirection
   chrome.webRequest.onBeforeRequest.addListener(
     handleRedirect,
@@ -425,7 +484,7 @@ function handleRedirect(details) {
   
   // Check each mapping to see if we should redirect
   for (const [site, settings] of Object.entries(redirectMappings)) {
-    if (settings.enabled && hostname.includes(site)) {
+    if (settings.enabled && (hostname === site || hostname === `www.${site}`)) {
       // Create the redirect URL
       const redirectUrl = createRedirectUrl(site, url);
       if (redirectUrl) {
@@ -473,11 +532,27 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
   if (message.action === 'getSettings') {
     sendResponse({ settings: redirectMappings });
   } else if (message.action === 'updateSettings') {
-    const { site, enabled, preferredInstance } = message.data;
+    const { site, enabled, preferredInstance, customInstances } = message.data;
     if (redirectMappings[site]) {
       redirectMappings[site].enabled = enabled;
+      
+      // Update custom instances if provided
+      if (customInstances !== undefined) {
+        redirectMappings[site].customInstances = customInstances;
+      }
+      
       if (preferredInstance) {
-        redirectMappings[site].preferredInstance = preferredInstance;
+        // Validate that preferredInstance is in the instances array or custom instances
+        const allInstances = [
+          ...(redirectMappings[site].instances || []),
+          ...(redirectMappings[site].customInstances || [])
+        ];
+        
+        if (allInstances.includes(preferredInstance)) {
+          redirectMappings[site].preferredInstance = preferredInstance;
+        } else {
+          console.warn(`Invalid preferredInstance for ${site}: ${preferredInstance}`);
+        }
       }
       saveSettings();
       sendResponse({ success: true });
