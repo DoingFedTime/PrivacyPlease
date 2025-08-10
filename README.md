@@ -40,12 +40,18 @@ The extension supports multiple frontends for each service. You can pick your pr
 |----------------|------------------|------------------|
 | YouTube        | Invidious        | `https://yewtu.be` |
 | Twitter/X      | Nitter           | `https://nitter.net` |
-| Reddit         | RedLib           | `https://redlib.catsarch.com` |
-| TikTok         | ProxiTok         | `https://proxitok.herokuapp.com` |
-| Instagram      | Proxigram        | `https://proxigram.herokuapp.com` |
-| Google Search  | SearXNG          | `https://searx.space` |
+| Reddit         | RedLib           | `https://safereddit.com` |
+| TikTok         | ProxiTok         | `https://tok.artemislena.eu` |
+| Instagram      | Proxigram        | `https://proxigram.lunar.icu` |
+| Google Search  | SearXNG          | `https://search.disroot.org` |
 | Medium         | Scribe           | `https://scribe.rip` |
 | Facebook       | Mobile site      | `https://m.facebook.com` |
+| StackOverflow  | AnonymousOverflow| `https://code.whatever.social` |
+| Tumblr         | Priviblur        | `https://pb.bloat.cat` |
+| Twitch         | SafeTwitch       | `https://safetwitch.drgns.space` |
+| IMDb           | LibreMDB         | `https://libremdb.iket.me` |
+| Quora          | Quetre           | `https://quetre.iket.me` |
+| Google Translate| Lingva Translate| `https://lingva.ml` |
 | and more...
 
 ---
